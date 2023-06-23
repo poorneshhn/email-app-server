@@ -2,6 +2,8 @@ const express = require("express");
 const authRouter = require("./routes/authRoutes");
 require("./services/passport");
 
+const app = express();
+
 // middlewares
 app.use(express.json());
 app.use("/auth", authRouter);

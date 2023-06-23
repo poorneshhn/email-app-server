@@ -9,8 +9,12 @@ router.get(
   })
 );
 
-router.get("/google/callback", passport.authenticate("google"), (req, res) => {
-  res.send("dinga");
-});
+router.get(
+  "/google/callback",
+  passport.authenticate("google")
+  // (req, res) => {
+  //   res.send("dinga");
+  // }
+);
 
 module.exports = router;
