@@ -2,10 +2,13 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   googleID: String,
-  //   name: {
-  //     type: String,
-  //     required: true,
-  //   },
+  credits: {
+    type: Number,
+    default: 0,
+  },
+  picture: String,
+  email: String,
+  name: String,
 });
 
-mongoose.model("users", userSchema);
+module.exports = mongoose.model("users", userSchema);

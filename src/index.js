@@ -1,10 +1,14 @@
 const express = require("express");
-const authRouter = require("./routes/authRouter");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 const keys = require("./config/keys");
 require("./db/mongoose");
 require("./services/passport");
+const cors = require("cors");
+
+// routers
+const authRouter = require("./routes/auth.router");
+const apiRouter = require("./routes/api.router");
 
 const app = express();
 
@@ -18,6 +22,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
+app.use("/api", apiRouter);
 app.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 5000;
