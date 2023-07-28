@@ -1,17 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const keys = require("../config/keys");
-const { isLoggedIn } = require("../middlewares/authMiddleware");
+const { requireLogin } = require("../middlewares/authMiddleware");
 const stripe = require("stripe")(keys.stripeSecretKey);
 const User = require("../models/user.model");
+const surveyRouter = require("./survey.router");
 
-router.get("/user", isLoggedIn, async (req, res) => {
+router.use("/surveys", surveyRouter);
+
+router.get("/user", requireLogin, async (req, res) => {
   try {
-    if (req.user) {
-      const user = await User.findOne({ _id: req.user._id });
-      res.send(user);
-      return;
-    }
     res.send(req.user);
   } catch (error) {
     console.log(error, "error");
@@ -19,7 +17,7 @@ router.get("/user", isLoggedIn, async (req, res) => {
   }
 });
 
-router.post("/stripe", isLoggedIn, async (req, res) => {
+router.post("/stripe", requireLogin, async (req, res) => {
   stripe.customers
     .create({
       email: req.body.email,
@@ -54,7 +52,7 @@ router.post("/stripe", isLoggedIn, async (req, res) => {
   // console.log(data, "data");
 });
 
-router.get("/logout", isLoggedIn, (req, res) => {
+router.get("/logout", requireLogin, (req, res) => {
   req.logout();
   res.redirect("/");
 });
