@@ -5,15 +5,23 @@ const keys = require("./config/keys");
 require("./db/mongoose");
 require("./services/passport");
 
+// app
+const app = express();
+
 // job
 require("./jobs/reminderScan.job");
+
+// cors setup
 const cors = require("cors");
+const corsOptions = {
+  origin: "https://emaily-p.vercel.app",
+  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 // routers
 const authRouter = require("./routes/auth.router");
 const apiRouter = require("./routes/api.router");
-
-const app = express();
 
 // middlewares
 app.use(
