@@ -2,6 +2,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const keys = require("../config/keys");
 const mongoose = require("mongoose");
+const { callback_url } = require("../URLS");
 require("../models/user.model");
 
 const User = mongoose.model("users");
@@ -20,7 +21,7 @@ passport.use(
     {
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
-      callbackURL: "/auth/google/callback",
+      callbackURL: `${callback_url}/auth/google/callback`,
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(accessToken, "accessToken");
