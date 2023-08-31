@@ -4,6 +4,9 @@ const cookieSession = require("cookie-session");
 const keys = require("./config/keys");
 require("./db/mongoose");
 require("./services/passport");
+
+// job
+require("./jobs/reminderScan.job");
 const cors = require("cors");
 
 // routers
