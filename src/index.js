@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const passport = require("passport");
+const { client_url } = require("./URLS");
 const cookieSession = require("cookie-session");
 const keys = require("./config/keys");
 require("./db/mongoose");
@@ -15,7 +16,7 @@ require("./jobs/reminderScan.job");
 // cors setup
 const cors = require("cors");
 const corsOptions = {
-  origin: "https://emaily-p.vercel.app",
+  origin: [client_url],
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
