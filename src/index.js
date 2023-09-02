@@ -10,19 +10,19 @@ require("./services/passport");
 // app
 const app = express();
 
-// job
-require("./jobs/reminderScan.job");
-
 // cors setup
 const cors = require("cors");
 const corsOptions = {
-  origin: [client_url],
+  credentials: true,
+  origin: client_url,
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
 
+// job
+require("./jobs/reminderScan.job");
+
 // routers
-const authRouter = require("./routes/auth.router");
 const apiRouter = require("./routes/api.router");
 
 // middlewares
@@ -36,7 +36,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
 app.use("/api", apiRouter);
-app.use("/auth", authRouter);
 
 const PORT = process.env.PORT || 5000;
 

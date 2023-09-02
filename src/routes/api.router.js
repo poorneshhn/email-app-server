@@ -5,9 +5,13 @@ const { requireLogin } = require("../middlewares/authMiddleware");
 const stripe = require("stripe")(keys.stripeSecretKey);
 const User = require("../models/user.model");
 const surveyRouter = require("./survey.router");
+const authRouter = require("./auth.router");
 const reminderRouter = require("./reminder.router");
+const { client_url } = require("../URLS");
 
 router.use("/surveys", surveyRouter);
+
+router.use("/auth", authRouter);
 
 router.get("/user", requireLogin, async (req, res) => {
   try {
@@ -61,9 +65,9 @@ router.post("/stripe", requireLogin, async (req, res) => {
   }
 });
 
-router.get("/logout", requireLogin, (req, res) => {
+router.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/");
+  res.redirect(client_url);
 });
 
 router.use("/reminder", requireLogin, reminderRouter);

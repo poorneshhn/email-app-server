@@ -24,6 +24,7 @@ router.get("/google/callback", passport.authenticate("google"), (req, res) => {
   //     // the period before is important and intentional
   //   })
   // );
+  res.setHeader("Location", "/");
   res.redirect(client_url);
 });
 
